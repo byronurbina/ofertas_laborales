@@ -1,0 +1,40 @@
+<h1>Listing jobs</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Company</th>
+    
+  </tr>
+<% $num = 0 %>
+<% @jobs.each do |job| %>
+  <tr>
+    <% $num= $num + 1%>
+	<td id=<%= $num %>><%= link_to job.title, job_path(job.id),:class => "links" %></td>
+    <td><%= job.company %></td>
+  
+    
+  </tr>
+<% end %>
+</table>
+<div id="caja"></div>
+<br />
+
+<%= link_to 'New Job', new_job_path %>
+<script>
+jQuery(".links").click(function(){
+var link = jQuery(this).attr('href');
+jQuery.ajax({
+cache:false,
+url: link,
+success :function(data){
+jQuery('#caja').html(data);
+},
+error: function(){
+alert('ocurrio un error' );
+}
+
+});
+return false;
+});
+</script>
